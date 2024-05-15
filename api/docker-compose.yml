@@ -27,15 +27,15 @@ services:
       depends_on:
         - core
 
-    ### Certbot ###########################################
-    certbot:
-      image: "certbot/certbot"
-      command: "certonly --standalone -n -m ${EMAIL} -d ${CORE_DOMAIN} --agree-tos"
-      ports:
-        - "80:80"
-      volumes:
-        - "/etc/letsencrypt:/etc/letsencrypt"
-        - "/var/lib/letsencrypt:/var/lib/letsencrypt"
+    # ### Certbot ###########################################
+    # certbot:
+    #   image: "certbot/certbot"
+    #   command: "certonly --standalone -v -n -m ${EMAIL} -d ${CORE_DOMAIN} --agree-tos"
+    #   ports:
+    #     - "80:80"
+    #   volumes:
+    #     - "/etc/letsencrypt:/etc/letsencrypt"
+    #     - "/var/lib/letsencrypt:/var/lib/letsencrypt"
     ### PostgreSQL ###########################################
     postgres:
       build:

@@ -57,11 +57,15 @@ export default NextAuth({
     async jwt({ token, user, account }) {
       console.log("[JWT CALLBACK]");
       console.log("Token:", token);
-      console.log("User: ", user);
+      console.log("User_a: ", user);
       console.log("Account: ", account);
       let newToken = { ...token };
+      
+      console.log("h3");
       // user just signed in
       if (user !== null && user !== undefined && account !== undefined) {
+        console.log("h2");
+
         // may have to switch it up a bit for other providers
         if (account?.provider === "google") {
           // extract these two tokens
@@ -80,6 +84,7 @@ export default NextAuth({
            * It's called with expires_in key because that is the default google token response,
            * thus backend django-allauth is expecting expires_in key
            * */
+
           try {
             const response = await axios.post(LOGIN_URL(account.provider), {
               access_token: accessToken,
@@ -105,10 +110,13 @@ export default NextAuth({
           }
         }
       }
-
+          
+      console.log("h1");
+     
       // user was signed in previously, we want to check if the token needs refreshing
       // token has been invalidated, try refreshing it
       if (isJwtExpired(token.accessToken as string)) {
+        console.log("here");
         const [newAccessToken, newRefreshToken] = await refreshTokenRequest(
           token.refreshToken as string
         );
@@ -129,7 +137,7 @@ export default NextAuth({
           exp: 0,
         };
       }
-
+      
       // token valid
       return token;
     },
